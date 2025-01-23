@@ -5,9 +5,12 @@ module.exports = {
   entry: {
     app: './src/index.js',
   },
+  devServer: {
+    watchFiles: ["./src/template.html"],
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Production',
+      template: "./src/template.html",
     }),
   ],
   output: {
