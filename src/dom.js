@@ -15,11 +15,15 @@ export function displayInputWindow(i) {
     let exec = false;
     item.forEach(e => {
         for (let key in e) {
+            if (Object.keys(e).slice(-1)[0] !== key) {
+
+            
             if (!exec) {
             createElement('task-list', 'div', '', 'task-div', 'div' + i)
             exec = true
             }
             createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
+            }
         }
         ++i; 
         exec = false;
@@ -41,6 +45,11 @@ function charRemove(str) {
     return str;
 }
 
-// displayTask();
+export function clearForm() {
+    const form = document.getElementById('task-form')
+    for (i = 0; i < form.elements.length; i++) {
+        let element = form.elements[i]
+        element.value = ''
+    }
+}
 
-// function ()

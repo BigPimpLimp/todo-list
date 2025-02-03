@@ -1,16 +1,18 @@
 import './style.css';
-import { displayInputWindow, displayNewTask } from './dom';
+import { displayInputWindow, displayNewTask, clearForm } from './dom';
 
 console.log('Yeet');
 
 export class task {
+    static counter = 0;
     constructor(title, description, dueDate, priority, notes) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
-    } 
+        this.id = task.counter++;
+    }  
 }
 
 (function btnListener() {
@@ -24,7 +26,14 @@ export class task {
         storeItem('tasklist', newTask);
         displayNewTask(newTask)
         displayInputWindow(false);
+        clearForm()
         e.preventDefault();
+    })
+    const closeBtn = document.getElementById('close-btn');
+    closeBtn.addEventListener('click', (e) => {
+        displayInputWindow(false)
+        clearForm()
+        e.preventDefault()
     })
 })();
 
