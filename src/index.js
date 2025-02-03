@@ -1,9 +1,7 @@
 import './style.css';
-import { displayInputWindow, displayTask } from './dom';
+import { displayInputWindow, displayNewTask } from './dom';
 
 console.log('Yeet');
-
-const arrTask = [];
 
 export class task {
     constructor(title, description, dueDate, priority, notes) {
@@ -14,6 +12,7 @@ export class task {
         this.notes = notes;
     } 
 }
+
 (function btnListener() {
     const taskBtn = document.getElementById('task-btn');
     taskBtn.addEventListener('click', () => {
@@ -21,16 +20,13 @@ export class task {
     })
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', (e) => {
-        createTask(arrTask);
-        storeItem('tasklist', arrTask);
-        displayTask();
+        const newTask = createTask();
+        storeItem('tasklist', newTask);
+        displayNewTask(newTask)
         displayInputWindow(false);
         e.preventDefault();
-
     })
 })();
-
-
 
 export function createElement(id, element, value, cssClass, ownId) {
     const content = document.getElementById(id);
@@ -42,15 +38,23 @@ export function createElement(id, element, value, cssClass, ownId) {
     return container;
 }
 
-function getInput() {
-
-}
-
-function createTask(arr) {
-    const newTask = new task(document.getElementById('title').value, document.getElementById('description').value, document.getElementById('datePicker').value, document.getElementById('priority').value)
-    arr.push(newTask);
+function createTask() {
+    const newTask = new task(document.getElementById('title').value, document.getElementById('description').value, document.getElementById('datePicker').value, document.getElementById('priority').value, '')
+    return newTask
 }
 
 function storeItem(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    const taskArray = fetchItem(key)
+    taskArray.push(value)
+    localStorage.setItem(key, JSON.stringify(taskArray));
 }
+
+function deleteItem(key, index) {
+    const taskArray = fetchItem(key)
+    taskArray.splice(index, 1)
+    localStorage.setItem(key, JSON.stringify(taskArray));
+}
+
+export function fetchItem(key) {
+    return JSON.parse(localStorage.getItem(key));
+ }

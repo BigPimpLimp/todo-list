@@ -1,4 +1,4 @@
-import { createElement } from ".";
+import { createElement, task, fetchItem } from ".";
 
 export function displayInputWindow(i) {
     if (!i) {
@@ -9,27 +9,35 @@ export function displayInputWindow(i) {
     }
 }
 
-export function fetchItem(key) {
-   return JSON.parse(localStorage.getItem(key));
-    // console.log(item);
-    // return item;
-}
-
-export function displayTask() {
+(function displayStoredTask() {
     const item = fetchItem('tasklist');
-    console.log(item);
     let i = 0;
+    let exec = false;
     item.forEach(e => {
         for (let key in e) {
+            if (!exec) {
             createElement('task-list', 'div', '', 'task-div', 'div' + i)
+            exec = true
+            }
             createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
         }
-        i++; 
+        ++i; 
+        exec = false;
     });
+})();
+
+let i = 0;
+
+export function displayNewTask(taskObj) {
+    createElement('task-list', 'div', '', 'task-div', 'newDiv' + i)
+    for (let key in taskObj) {
+        createElement('newDiv' + i, 'p', taskObj[key], 'task-p')
+    }
+    ++i;
 };
 
 function charRemove(str) {
-    str = str.replaceAll('"', '');
+    str =  str.replaceAll('"', '');
     return str;
 }
 

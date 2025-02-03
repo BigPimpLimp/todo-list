@@ -47,3 +47,8 @@ nav {
 .tasks {
     margin: 5px;
 }
+
+.task-div {
+    border: 2px solid white;
+    margin: 5px;
+}
