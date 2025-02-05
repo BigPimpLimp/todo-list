@@ -11,13 +11,16 @@ export function displayInputWindow(i) {
 
 (function displayStoredTask() {
     const item = fetchItem('tasklist');
+    if (item == null) {
+        return
+    }
     let i = 0;
     let exec = false;
+    console.log(item)
     item.forEach(e => {
         for (let key in e) {
             if (Object.keys(e).slice(-1)[0] !== key) {
-
-            
+                
             if (!exec) {
             createElement('task-list', 'div', '', 'task-div', 'div' + i)
             exec = true
@@ -29,6 +32,30 @@ export function displayInputWindow(i) {
         exec = false;
     });
 })();
+
+export function displayStoredTask() {
+    const item = fetchItem('tasklist');
+    if (item == null) {
+        return
+    }
+    let i = 0;
+    let exec = false;
+    console.log(item)
+    item.forEach(e => {
+        for (let key in e) {
+            if (Object.keys(e).slice(-1)[0] !== key) {
+                
+            if (!exec) {
+            createElement('task-list', 'div', '', 'task-div', 'div' + i)
+            exec = true
+            }
+            createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
+            }
+        }
+        ++i; 
+        exec = false;
+    });
+};
 
 let i = 0;
 
@@ -53,3 +80,13 @@ export function clearForm() {
     }
 }
 
+(function createDeleteButton() {
+    const taskDiv = document.querySelectorAll('.task-div')
+    taskDiv.forEach(task => {
+        const btn = document.createElement('button')
+        btn.textContent = 'delete'
+        btn.setAttribute('class', 'delete-btn')
+        task.appendChild(btn)
+    })
+
+})()
