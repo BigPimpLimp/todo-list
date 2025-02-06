@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+</head>
+<body>
+    <header>
+    </header>
+
+    <nav>
+        <button id="task-btn" class="nav-btn">Add Task</button>
+        <button class="nav-btn">Placeholder</button>
+        <button class="nav-btn">Placeholder</button>
+    </nav>
+    <div id="inputWindow">
+        <form action="" method="post" class="form" id="task-form">
+            <div id="title-description">
+                <label for="title"></label>
+                <input type="text" id="title" name="title" placeholder="Enter title here">
+                <label for="description"></label>
+                <input type="text" id="description" name="description" placeholder="Enter description here">
+            </div>  
+            <div id="dropDowns">
+                <label for="datePicker"></label>
+                <input type="date" id="datePicker">
+                <select name="priority" id="priority">
+                    <option value="" selected disabled hidden>Priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">high</option>
+                </select>
+            </div>
+            <div id="submitDiv">
+                <button id="submit-btn">Submit</button>
+                <button id="close-btn">x</button>
+            </div>
+        </form>
+    </div>
+    <div id="task-list"></div>
+</body>
+</html>
