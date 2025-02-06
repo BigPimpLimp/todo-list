@@ -33,7 +33,7 @@ export function displayInputWindow(i) {
     });
 })();
 
-export function displayStoredTask() {
+export function displayTask() {
     const item = fetchItem('tasklist');
     if (item == null) {
         return
@@ -46,7 +46,11 @@ export function displayStoredTask() {
             if (Object.keys(e).slice(-1)[0] !== key) {
                 
             if (!exec) {
-            createElement('task-list', 'div', '', 'task-div', 'div' + i)
+            let div = createElement('task-list', 'div', '', 'task-div', 'div' + i)
+            const btn = document.createElement('button')
+            btn.textContent = 'delete'
+            btn.setAttribute('class', 'delete-btn')
+            div.appendChild(btn)
             exec = true
             }
             createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
@@ -80,13 +84,13 @@ export function clearForm() {
     }
 }
 
-(function createDeleteButton() {
-    const taskDiv = document.querySelectorAll('.task-div')
-    taskDiv.forEach(task => {
-        const btn = document.createElement('button')
-        btn.textContent = 'delete'
-        btn.setAttribute('class', 'delete-btn')
-        task.appendChild(btn)
-    })
+// (function createDeleteButton() {
+//     const taskDiv = document.querySelectorAll('.task-div')
+//     taskDiv.forEach(task => {
+//         const btn = document.createElement('button')
+//         btn.textContent = 'delete'
+//         btn.setAttribute('class', 'delete-btn')
+//         task.appendChild(btn)
+//     })
 
-})()
+// })()

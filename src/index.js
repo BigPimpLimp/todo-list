@@ -1,5 +1,5 @@
 import './style.css';
-import { displayInputWindow, displayNewTask, clearForm, displayStoredTask } from './dom';
+import { displayInputWindow, displayNewTask, clearForm, displayTask } from './dom';
 
 console.log('Yeet');
 
@@ -13,6 +13,7 @@ export class task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
+
     }  
 }
 
@@ -48,6 +49,7 @@ export class task {
             
             console.log(id)
             deleteItem('tasklist', id)
+            displayTask()
            }
         })
     })
@@ -82,8 +84,8 @@ function storeItem(key, value, arr) {
 function deleteItem(key, index) {
     let taskArray = fetchItem(key)
     console.log(taskArray)
-    taskArray = taskArray.splice(index, 1)
-
+    taskArray.splice(index, 1)
+    console.log(taskArray)
     localStorage.setItem(key, JSON.stringify(taskArray));
 }
 
@@ -91,3 +93,11 @@ export function fetchItem(key) {
     return JSON.parse(localStorage.getItem(key));
  }
 
+// function updateId(key) {
+//     let taskArray = fetchItem(key)
+//     if (taskArray == null) {
+//         return 0
+//     }
+//     const lastElement = taskArray[taskArray.length - 1]
+//         return lastElement.id + 1
+// }
