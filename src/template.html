@@ -38,6 +38,34 @@
             </div>
         </form>
     </div>
+    <div id="editWindow">
+        <form action="" method="post" class="form" id="editTask-form">
+            <div id="title-description">
+                <label for="title-edit"></label>
+                <input type="text" id="title-edit" name="title-edit">
+                <label for="description-edit"></label>
+                <input type="text" id="description-edit" name="description-edit">
+            </div>  
+            <div id="dropDowns">
+                <label for="datePicker-edit"></label>
+                <input type="date-edit" id="datePicker-edit">
+                <select name="priority-edit" id="priority-edit">
+                    <option value="" selected disabled hidden>Priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">high</option>
+                </select>
+            </div>
+            <div id ='notes-edit'>
+                <label for="notes-edit"></label>
+                <input type="text" id="notes-edit" name="notes-edit">
+            </div>
+            <div id="submitDiv-edit">
+                <button id="submit-btn-edit">Submit</button>
+                <button id="close-btn-edit">x</button>
+            </div>
+        </form>
+    </div>
     <div id="task-list"></div>
 </body>
 </html>

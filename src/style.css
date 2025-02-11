@@ -19,6 +19,16 @@ lable, input {
     visibility: hidden;
 }
 
+#editWindow {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    background-color: blue;
+    padding: 15px;
+    /* display: none; */
+    visibility: hidden;
+}e
+
 .form {
     color: blue;
 }

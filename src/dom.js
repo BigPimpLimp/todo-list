@@ -1,15 +1,22 @@
 import { createElement, task, fetchItem } from ".";
 
-export function displayInputWindow(i) {
-    if (!i) {
-        document.getElementById('inputWindow').style.visibility = "hidden";
+export function displayInputWindow(bool, id) {
+    if (!bool) {
+        document.getElementById(id).style.visibility = "hidden";
     }
-    if (i) {
-        document.getElementById('inputWindow').style.visibility = "visible";
+    if (bool) {
+        document.getElementById(id).style.visibility = "visible";
     }
 }
 
-(function displayStoredTask() {
+export function wipeDiv(divId) {
+    const div = document.getElementById(divId)
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
+}
+
+export function displayTask() {
     const item = fetchItem('tasklist');
     if (item == null) {
         return
@@ -23,6 +30,7 @@ export function displayInputWindow(i) {
                 
             if (!exec) {
             createElement('task-list', 'div', '', 'task-div', 'div' + i)
+            createElement('div' + i, 'button', 'delete', 'delete-btn', '')
             exec = true
             }
             createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
@@ -31,40 +39,6 @@ export function displayInputWindow(i) {
         ++i; 
         exec = false;
     });
-})();
-
-export function displayStoredTask() {
-    const item = fetchItem('tasklist');
-    if (item == null) {
-        return
-    }
-    let i = 0;
-    let exec = false;
-    console.log(item)
-    item.forEach(e => {
-        for (let key in e) {
-            if (Object.keys(e).slice(-1)[0] !== key) {
-                
-            if (!exec) {
-            createElement('task-list', 'div', '', 'task-div', 'div' + i)
-            exec = true
-            }
-            createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
-            }
-        }
-        ++i; 
-        exec = false;
-    });
-};
-
-let i = 0;
-
-export function displayNewTask(taskObj) {
-    createElement('task-list', 'div', '', 'task-div', 'newDiv' + i)
-    for (let key in taskObj) {
-        createElement('newDiv' + i, 'p', taskObj[key], 'task-p')
-    }
-    ++i;
 };
 
 function charRemove(str) {
@@ -72,21 +46,21 @@ function charRemove(str) {
     return str;
 }
 
-export function clearForm() {
-    const form = document.getElementById('task-form')
+export function clearForm(id) {
+    let i = 0
+    const form = document.getElementById(id)
     for (i = 0; i < form.elements.length; i++) {
         let element = form.elements[i]
         element.value = ''
     }
 }
 
-(function createDeleteButton() {
-    const taskDiv = document.querySelectorAll('.task-div')
-    taskDiv.forEach(task => {
-        const btn = document.createElement('button')
-        btn.textContent = 'delete'
-        btn.setAttribute('class', 'delete-btn')
-        task.appendChild(btn)
-    })
+export function displayEditTask(obj) {
+    document.getElementById('title-edit').value = obj.title
+    document.getElementById('description-edit').value = obj.description
+    document.getElementById('datePicker-edit').value = obj.dueDate
+    document.getElementById('priority-edit').value = obj.priority
+    document.getElementById('notes-edit').value = obj.notes
+}
 
-})()
+displayTask();
