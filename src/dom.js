@@ -23,17 +23,18 @@ export function displayTask() {
     }
     let i = 0;
     let exec = false;
-    console.log(item)
     item.forEach(e => {
         for (let key in e) {
             if (Object.keys(e).slice(-1)[0] !== key) {
                 
             if (!exec) {
             createElement('task-list', 'div', '', 'task-div', 'div' + i)
-            createElement('div' + i, 'button', 'delete', 'delete-btn', '')
+            createElement('div' + i, 'div', '', 'taskDiv', 'taskDiv' + i)
+            createElement('div' + i, 'div', '', 'button-div', 'btnDiv' + i)
+            createElement('btnDiv' + i, 'button', 'delete', 'delete-btn', '')
             exec = true
             }
-            createElement('div' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
+            createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
             }
         }
         ++i; 
@@ -63,4 +64,3 @@ export function displayEditTask(obj) {
     document.getElementById('notes-edit').value = obj.notes
 }
 
-displayTask();

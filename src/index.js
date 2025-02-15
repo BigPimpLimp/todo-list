@@ -1,9 +1,9 @@
 import './style.css';
 import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEditTask, wipeDiv } from './dom';
 
+console.log('Yeet')
 
-
-console.log('Yeet');
+displayTask()
 
 const taskArray = []
 
@@ -18,11 +18,45 @@ export class task {
     }  
 }
 
-(function btnListener() {
+//use event delegation so you don't have so many event listeners. May also fix issue with listeners not working after one is used
+
+
+const div = document.querySelector('#task-list')
+console.log(div)
+div.addEventListener('click', (e) => {
+    if (e.target.classList.contains('task-div')) {
+        const target = e.target.closest('.taskDiv')
+        console.log(target)
+        if (target) {
+            let id = e.target.parentElement.id
+            id = id.slice(7)
+            id = parseInt(id)
+            displayInputWindow(true, 'editWindow')
+            editItem('tasklist', id)
+            submitEditedTask(id)
+        }
+    }
+    if (e.target.className === 'deleteBtn') {
+        const target = e.target.closest('.task-div')
+        if (target) {
+            let id = target.id
+            id = id.slice(3)
+            id = parseInt(id)
+            deleteItem('tasklist', id)
+            wipeDiv('task-list')
+            displayTask()
+        }
+    }
+    else return console.log('fuck you')
+})
+
     const taskBtn = document.getElementById('task-btn');
     taskBtn.addEventListener('click', () => {
         displayInputWindow(true, 'inputWindow');
     })
+
+
+
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', (e) => {
         const newTask = createTask();
@@ -33,40 +67,60 @@ export class task {
         clearForm('task-form')
         e.preventDefault();
     })
+
+
+
     const closeBtn = document.getElementById('close-btn');
     closeBtn.addEventListener('click', (e) => {
         displayInputWindow(false, 'inputWindow')
         clearForm('task-form')
         e.preventDefault()
     })
-    const deleteBtn = document.querySelectorAll('.delete-btn')
-    deleteBtn.forEach(button => {
-        button.addEventListener('click', (e) => {
-           const target = e.target.closest('.delete-btn')
-           if (target) {
-            let id = e.target.parentElement.id
-            id = id.slice(3)
-            id = parseInt(id)
-            deleteItem('tasklist', id)
-           }
-        })
+
+
+
+    const editCloseBtn = document.getElementById('close-btn-edit')
+    editCloseBtn.addEventListener('click', (e) => {
+        displayInputWindow(false, 'editWindow')
+        clearForm('editTask-form')
+        e.preventDefault()
     })
-    const editDiv = document.querySelectorAll('.task-div')
-    editDiv.forEach(div => {
-        div.addEventListener('click', (e) => {
-            const target = e.target.closest('.task-div')
-            if (target) {
-                let id = e.target.parentElement.id
-                id = id.slice(3)
-                id = parseInt(id)
-                displayInputWindow(true, 'editWindow')
-                editItem('tasklist', id)
-                submitEditedTask(id)
-            }
-        })
+
+
+
+    // const deleteBtn = document.querySelectorAll('.delete-btn')
+    // deleteBtn.forEach(button => {
+    //     button.addEventListener('click', (e) => {
+    //        const target = e.target.closest('.task-div')
+    //        if (target) {
+    //         let id = target.id
+    //         id = id.slice(3)
+    //         id = parseInt(id)
+    //         deleteItem('tasklist', id)
+    //         wipeDiv('task-list')
+    //         displayTask()
+    //        }
+    //     })
+    // })
+
+
+
+    // const editDiv = document.querySelectorAll('.taskDiv')
+    // editDiv.forEach(div => {
+    //     div.addEventListener('click', (e) => {
+    //         const target = e.target.closest('.taskDiv')
+    //         if (target) {
+    //             let id = e.target.parentElement.id
+    //             id = id.slice(7)
+    //             id = parseInt(id)
+    //             displayInputWindow(true, 'editWindow')
+    //             editItem('tasklist', id)
+    //             submitEditedTask(id)
+    //         }
+    //     })
         
-    })
-})();
+    // })
+
 
 function submitEditedTask(id) {
     const submitEditBtn = document.getElementById('submit-btn-edit')
@@ -121,7 +175,9 @@ function storeItem(key, value, arr) {
 }
 
 function deleteItem(key, index) {
-    const taskArray = fetchItem(key).splice(index, 1)
+    let taskArray = fetchItem(key)
+    taskArray.splice(index, 1)
+    console.log(taskArray)
     localStorage.setItem(key, JSON.stringify(taskArray));
 }
 
@@ -142,5 +198,4 @@ function storeEditItem(key, index) {
     localStorage.setItem(key, JSON.stringify(taskObj))
 }
 
-// create seperate event listener for edit-task id
-
+// editItem is returning taskObj as an array, however taskObj[0] is always undefined
