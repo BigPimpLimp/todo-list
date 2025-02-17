@@ -20,23 +20,21 @@ export class task {
 
 //use event delegation so you don't have so many event listeners. May also fix issue with listeners not working after one is used
 
+let id = null
 
 const div = document.querySelector('#task-list')
-console.log(div)
 div.addEventListener('click', (e) => {
-    if (e.target.classList.contains('task-div')) {
+    if (e.target.matches('.task-p')) {
         const target = e.target.closest('.taskDiv')
-        console.log(target)
         if (target) {
-            let id = e.target.parentElement.id
+            id = e.target.parentElement.id
             id = id.slice(7)
             id = parseInt(id)
             displayInputWindow(true, 'editWindow')
             editItem('tasklist', id)
-            submitEditedTask(id)
         }
     }
-    if (e.target.className === 'deleteBtn') {
+    if (e.target.matches('.delete-btn')) {
         const target = e.target.closest('.task-div')
         if (target) {
             let id = target.id
@@ -47,18 +45,17 @@ div.addEventListener('click', (e) => {
             displayTask()
         }
     }
-    else return console.log('fuck you')
 })
 
-    const taskBtn = document.getElementById('task-btn');
-    taskBtn.addEventListener('click', () => {
-        displayInputWindow(true, 'inputWindow');
-    })
+const taskBtn = document.getElementById('task-btn');
+taskBtn.addEventListener('click', () => {
+    displayInputWindow(true, 'inputWindow');
+})
 
 
-
-    const submitBtn = document.getElementById('submit-btn');
-    submitBtn.addEventListener('click', (e) => {
+const taskForm = document.querySelector('#inputWindow')
+taskForm.addEventListener('click' , (e) => {
+    if (e.target.matches('#submit-btn')) {
         const newTask = createTask();
         storeItem('tasklist', newTask, taskArray);
         wipeDiv('task-list')
@@ -66,73 +63,30 @@ div.addEventListener('click', (e) => {
         displayInputWindow(false, 'inputWindow');
         clearForm('task-form')
         e.preventDefault();
-    })
-
-
-
-    const closeBtn = document.getElementById('close-btn');
-    closeBtn.addEventListener('click', (e) => {
+    }
+    if (e.target.matches('#close-btn')) {
         displayInputWindow(false, 'inputWindow')
         clearForm('task-form')
         e.preventDefault()
-    })
+    }
+})
 
-
-
-    const editCloseBtn = document.getElementById('close-btn-edit')
-    editCloseBtn.addEventListener('click', (e) => {
-        displayInputWindow(false, 'editWindow')
-        clearForm('editTask-form')
-        e.preventDefault()
-    })
-
-
-
-    // const deleteBtn = document.querySelectorAll('.delete-btn')
-    // deleteBtn.forEach(button => {
-    //     button.addEventListener('click', (e) => {
-    //        const target = e.target.closest('.task-div')
-    //        if (target) {
-    //         let id = target.id
-    //         id = id.slice(3)
-    //         id = parseInt(id)
-    //         deleteItem('tasklist', id)
-    //         wipeDiv('task-list')
-    //         displayTask()
-    //        }
-    //     })
-    // })
-
-
-
-    // const editDiv = document.querySelectorAll('.taskDiv')
-    // editDiv.forEach(div => {
-    //     div.addEventListener('click', (e) => {
-    //         const target = e.target.closest('.taskDiv')
-    //         if (target) {
-    //             let id = e.target.parentElement.id
-    //             id = id.slice(7)
-    //             id = parseInt(id)
-    //             displayInputWindow(true, 'editWindow')
-    //             editItem('tasklist', id)
-    //             submitEditedTask(id)
-    //         }
-    //     })
-        
-    // })
-
-
-function submitEditedTask(id) {
-    const submitEditBtn = document.getElementById('submit-btn-edit')
-    submitEditBtn.addEventListener('click', (e) => {
+const editTaskWindow = document.querySelector('#editWindow')
+editTaskWindow.addEventListener('click', (e) => {
+    if (e.target.matches('#submit-btn-edit')) {
         storeEditItem('tasklist', id)
         displayInputWindow(false, 'editWindow')
         clearForm('editTask-form')
         wipeDiv('task-list')
         displayTask()
         e.preventDefault()
-    })
-}
+    }
+    if (e.target.matches('#close-btn-edit')) {
+        displayInputWindow(false, 'editWindow')
+        clearForm('editTask-form')
+        e.preventDefault()
+    }
+})
 
 export function createElement(id, element, value, cssClass, ownId) {
     const content = document.getElementById(id)
@@ -156,12 +110,12 @@ function createTask() {
 
 function editTask() {
     const newTask = new task(document.getElementById('title-edit').value, 
-    document.getElementById('description-edit').value, 
-    document.getElementById('datePicker-edit').value, 
-    document.getElementById('priority-edit').value, 
-    document.getElementById('datePicker-edit').value, 
-    document.getElementById('notes-edit').value)
-    return newTask
+        document.getElementById('description-edit').value, 
+        document.getElementById('datePicker-edit').value, 
+        document.getElementById('priority-edit').value, 
+        document.getElementById('datePicker-edit').value, 
+        document.getElementById('notes-edit').value)
+        return newTask
 }
 
 function storeItem(key, value, arr) {
