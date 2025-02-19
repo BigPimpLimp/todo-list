@@ -113,8 +113,8 @@ function editTask() {
         document.getElementById('description-edit').value, 
         document.getElementById('datePicker-edit').value, 
         document.getElementById('priority-edit').value, 
-        document.getElementById('datePicker-edit').value, 
         document.getElementById('notes-edit').value)
+        console.log(newTask)
         return newTask
 }
 
@@ -148,8 +148,7 @@ function editItem(key, index) {
 function storeEditItem(key, index) {
     let taskObj = fetchItem(key)
     const newObj = editTask()
+    console.log(newObj)
     taskObj.splice(index, 1, newObj)
     localStorage.setItem(key, JSON.stringify(taskObj))
 }
-
-// editItem is returning taskObj as an array, however taskObj[0] is always undefined

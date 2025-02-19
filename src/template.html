@@ -11,8 +11,8 @@
 
     <nav>
         <button id="task-btn" class="nav-btn">Add Task</button>
-        <button class="nav-btn">Placeholder</button>
-        <button class="nav-btn">Placeholder</button>
+        <button class="nav-btn">My Projects</button>
+        <button class="nav-btn">Home</button>
     </nav>
     <div id="inputWindow">
         <form action="" method="post" class="form" id="task-form">
@@ -31,10 +31,13 @@
                     <option value="medium">Medium</option>
                     <option value="high">high</option>
                 </select>
+                <select name="projects" id="projects">
+                    <option value="home">Home</option>
+                </select>
             </div>
             <div id="submitDiv">
+                <button id="close-btn">Cancel</button>
                 <button id="submit-btn">Submit</button>
-                <button id="close-btn">x</button>
             </div>
         </form>
     </div>
@@ -56,13 +59,13 @@
                     <option value="high">high</option>
                 </select>
             </div>
-            <div id ='notes-edit'>
+            <div id ='notes-edit-div'>
                 <label for="notes-edit"></label>
-                <input type="text" id="notes-edit" name="notes-edit">
+                <input type="text" id="notes-edit" name="notes-edit" placeholder="Enter notes here">
             </div>
             <div id="submitDiv-edit">
+                <button id="close-btn-edit">Cancel</button>
                 <button id="submit-btn-edit">Submit</button>
-                <button id="close-btn-edit">x</button>
             </div>
         </form>
     </div>

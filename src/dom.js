@@ -18,8 +18,6 @@ export function wipeDiv(divId) {
 
 export function displayTask() {
     const item = fetchItem('tasklist');
-    console.log('break')
-    console.log(item)
     if (item == null) {
         return
     }
