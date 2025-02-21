@@ -59,10 +59,10 @@ export function displayProject() {
     if (item == null) {
         return
     }
-    let i = 0
+    let i = 1
     item.forEach(e => {
         for (let key in e) {                      
-            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', '')   
+            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project' + i)   
             addOption(charRemove(JSON.stringify(e[key])), 'projects')
         }
         ++i; 

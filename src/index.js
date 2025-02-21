@@ -3,7 +3,7 @@ import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEdit
 
 console.log('Yeet')
 
-displayTask('tasklist')
+displayTask('Home')
 displayProject()
 
 const taskArray = []
@@ -67,6 +67,15 @@ navButtons.addEventListener('click', (e) => {
     }
     if (e.target.matches('#add-project')) {
         displayInputWindow(true, 'project-form-div')
+    }
+    if (e.target.matches('.project-btn')) {
+        const target = e.target.closest('.project-btn')
+        console.log(target)
+        if (target) {
+            console.log(target.innerHTML)
+            wipeDiv('task-list')
+            displayTask(target.innerHTML)
+        }
     }
 })
 

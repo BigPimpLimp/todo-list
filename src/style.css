@@ -69,7 +69,7 @@ nav {
     justify-content: space-between;
 }
 
-#project-list {
+#project-list, #project0 {
     display: flex;
     flex-direction: column;
 }
