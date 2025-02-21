@@ -9,10 +9,18 @@
     <header>
     </header>
 
-    <nav>
+    <nav id="nav-buttons">
         <button id="task-btn" class="nav-btn">Add Task</button>
-        <button class="nav-btn">My Projects</button>
-        <button class="nav-btn">Home</button>
+        <div id="project-div" class="nav-btn">
+            <div class="project-header">
+                <h3>My Projects</h3>
+                <button id="add-project">Add</button>
+            </div>
+            <div id="project-list">
+                <button class="project-btn">Home</button>
+            </div>
+
+        </div>
     </nav>
     <div id="inputWindow">
         <form action="" method="post" class="form" id="task-form">
@@ -32,7 +40,7 @@
                     <option value="high">high</option>
                 </select>
                 <select name="projects" id="projects">
-                    <option value="home">Home</option>
+                    <option value="home">Home</option selected>
                 </select>
             </div>
             <div id="submitDiv">
@@ -58,6 +66,9 @@
                     <option value="medium">Medium</option>
                     <option value="high">high</option>
                 </select>
+                <select name="projects-edit" id="projects-edit">
+                    <option value="home">Home</option selected>
+                </select>
             </div>
             <div id ='notes-edit-div'>
                 <label for="notes-edit"></label>
@@ -66,6 +77,18 @@
             <div id="submitDiv-edit">
                 <button id="close-btn-edit">Cancel</button>
                 <button id="submit-btn-edit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div id="project-form-div">
+        <form action="" method="post" class="form" id="project-form">
+            <div id="project-name">
+                <label for="name"></label>
+                <input type="text" id="name" name="name" placeholder="Project Name...">
+            </div>
+            <div id="submitDiv-project">
+                <button id="close-btn-project">Cancel</button>
+                <button id="submit-btn-project">Add</button>
             </div>
         </form>
     </div>

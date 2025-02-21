@@ -5,11 +5,11 @@
     color: white;
 }
 
-lable, input {
+label, input {
     display: block;
 }
 
-#inputWindow {
+#inputWindow, #project-form-div {
     position: absolute;
     top: 30%;
     left: 30%;
@@ -27,7 +27,7 @@ lable, input {
     padding: 15px;
     /* display: none; */
     visibility: hidden;
-}e
+}
 
 .form {
     color: blue;
@@ -61,4 +61,15 @@ nav {
 .task-div {
     border: 2px solid white;
     margin: 5px;
+}
+
+.project-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#project-list {
+    display: flex;
+    flex-direction: column;
 }

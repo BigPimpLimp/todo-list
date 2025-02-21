@@ -1,24 +1,37 @@
 import './style.css';
-import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEditTask, wipeDiv } from './dom';
+import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEditTask, wipeDiv, displayProject } from './dom';
 
 console.log('Yeet')
 
-displayTask()
+displayTask('tasklist')
+displayProject()
 
 const taskArray = []
+const projectArray = []
 
-export class task {
+class task {
     static counter = 0;
-    constructor(title, description, dueDate, priority, notes) {
+    constructor(title, description, dueDate, priority, project, notes) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        this.project = project;
         this.notes = notes;
     }  
+
+    get myProject() {
+        return this.project
+    }
 }
 
-//use event delegation so you don't have so many event listeners. May also fix issue with listeners not working after one is used
+class project {
+    constructor(title) {
+        this.title = title
+    }
+}
+
+//need function that will get task.project when selecting a task to edit
 
 let id = null
 
@@ -47,19 +60,42 @@ div.addEventListener('click', (e) => {
     }
 })
 
-const taskBtn = document.getElementById('task-btn');
-taskBtn.addEventListener('click', () => {
-    displayInputWindow(true, 'inputWindow');
+const navButtons = document.querySelector('#nav-buttons')
+navButtons.addEventListener('click', (e) => {
+    if (e.target.matches('#task-btn')) {
+        displayInputWindow(true, 'inputWindow');
+    }
+    if (e.target.matches('#add-project')) {
+        displayInputWindow(true, 'project-form-div')
+    }
 })
 
+const projectForm = document.querySelector('#project-form-div')
+projectForm.addEventListener('click', (e) => {
+    if (e.target.matches('#close-btn-project')) {
+        displayInputWindow(false, 'project-form-div')
+        clearForm('project-form')
+        e.preventDefault()
+    }
+    if (e.target.matches('#submit-btn-project')) {
+        const newProject = createProject()
+        storeItem('projectList', newProject, projectArray)
+        wipeDiv('project-list')
+        displayProject()
+        displayInputWindow(false, 'project-form-div')
+        clearForm('project-form')
+        e.preventDefault()
+    }
+})
 
 const taskForm = document.querySelector('#inputWindow')
 taskForm.addEventListener('click' , (e) => {
     if (e.target.matches('#submit-btn')) {
         const newTask = createTask();
-        storeItem('tasklist', newTask, taskArray);
+        storeItem(newTask.myProject, newTask, taskArray);
+        console.log(newTask.myProject)
         wipeDiv('task-list')
-        displayTask()
+        displayTask(newTask.myProject)
         displayInputWindow(false, 'inputWindow');
         clearForm('task-form')
         e.preventDefault();
@@ -74,11 +110,12 @@ taskForm.addEventListener('click' , (e) => {
 const editTaskWindow = document.querySelector('#editWindow')
 editTaskWindow.addEventListener('click', (e) => {
     if (e.target.matches('#submit-btn-edit')) {
+
         storeEditItem('tasklist', id)
         displayInputWindow(false, 'editWindow')
         clearForm('editTask-form')
         wipeDiv('task-list')
-        displayTask()
+        displayTask('tasklist')
         e.preventDefault()
     }
     if (e.target.matches('#close-btn-edit')) {
@@ -88,24 +125,21 @@ editTaskWindow.addEventListener('click', (e) => {
     }
 })
 
-export function createElement(id, element, value, cssClass, ownId) {
-    const content = document.getElementById(id)
-    const container = document.createElement(element)
-    container.innerHTML = value
-    content.appendChild(container)
-    container.setAttribute('class', cssClass)
-    container.setAttribute('id', ownId)
-    return container
-}
-
 function createTask() {
     const newTask = new task(document.getElementById('title').value, 
     document.getElementById('description').value, 
     document.getElementById('datePicker').value, 
     document.getElementById('priority').value, 
+    document.getElementById('projects').value,
     '')
     taskArray.push(newTask)
     return newTask
+}
+
+function createProject() {
+    const newProject = new project(document.getElementById('name').value)
+    projectArray.push(newProject)
+    return newProject
 }
 
 function editTask() {
@@ -113,8 +147,8 @@ function editTask() {
         document.getElementById('description-edit').value, 
         document.getElementById('datePicker-edit').value, 
         document.getElementById('priority-edit').value, 
+        document.getElementById('projects').value,
         document.getElementById('notes-edit').value)
-        console.log(newTask)
         return newTask
 }
 
@@ -148,7 +182,8 @@ function editItem(key, index) {
 function storeEditItem(key, index) {
     let taskObj = fetchItem(key)
     const newObj = editTask()
-    console.log(newObj)
     taskObj.splice(index, 1, newObj)
     localStorage.setItem(key, JSON.stringify(taskObj))
 }
+
+// editItem is returning taskObj as an array, however taskObj[0] is always undefined

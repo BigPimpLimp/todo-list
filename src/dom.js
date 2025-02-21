@@ -1,4 +1,14 @@
-import { createElement, task, fetchItem } from ".";
+import { fetchItem } from ".";
+
+function createElement(id, element, value, cssClass, ownId) {
+    const content = document.getElementById(id)
+    const container = document.createElement(element)
+    container.innerHTML = value
+    content.appendChild(container)
+    container.setAttribute('class', cssClass)
+    container.setAttribute('id', ownId)
+    return container
+}
 
 export function displayInputWindow(bool, id) {
     if (!bool) {
@@ -16,8 +26,8 @@ export function wipeDiv(divId) {
     }
 }
 
-export function displayTask() {
-    const item = fetchItem('tasklist');
+export function displayTask(key) {
+    const item = fetchItem(key);
     if (item == null) {
         return
     }
@@ -42,6 +52,23 @@ export function displayTask() {
     });
 };
 
+
+
+export function displayProject() {
+    const item = fetchItem('projectList')
+    if (item == null) {
+        return
+    }
+    let i = 0
+    item.forEach(e => {
+        for (let key in e) {                      
+            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', '')   
+            addOption(charRemove(JSON.stringify(e[key])), 'projects')
+        }
+        ++i; 
+    });
+}
+
 function charRemove(str) {
     str =  str.replaceAll('"', '');
     return str;
@@ -61,6 +88,18 @@ export function displayEditTask(obj) {
     document.getElementById('description-edit').value = obj.description
     document.getElementById('datePicker-edit').value = obj.dueDate
     document.getElementById('priority-edit').value = obj.priority
+    document.getElementById('projects-edit').value = obj.project
     document.getElementById('notes-edit').value = obj.notes
 }
 
+
+
+function addOption(value, id) {
+  const selectElement = document.getElementById(id)
+  const newOption = document.createElement('option')
+  newOption.value = value
+  newOption.text = value
+  selectElement.add(newOption) // Or selectElement.appendChild(newOption);
+}
+
+addOption
