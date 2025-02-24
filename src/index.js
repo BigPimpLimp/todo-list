@@ -43,8 +43,10 @@ div.addEventListener('click', (e) => {
             id = e.target.parentElement.id
             id = id.slice(7)
             id = parseInt(id)
+            console.log(id)
+            const dataKey = target.getAttribute('data-key')
             displayInputWindow(true, 'editWindow')
-            editItem('tasklist', id)
+            editItem(dataKey, id)
         }
     }
     if (e.target.matches('.delete-btn')) {
@@ -88,7 +90,7 @@ projectForm.addEventListener('click', (e) => {
     }
     if (e.target.matches('#submit-btn-project')) {
         const newProject = createProject()
-        storeItem('projectList', newProject, projectArray)
+        storeItem('projectList', newProject)
         wipeDiv('project-list')
         displayProject()
         displayInputWindow(false, 'project-form-div')
@@ -101,7 +103,7 @@ const taskForm = document.querySelector('#inputWindow')
 taskForm.addEventListener('click' , (e) => {
     if (e.target.matches('#submit-btn')) {
         const newTask = createTask();
-        storeItem(newTask.myProject, newTask, taskArray);
+        storeItem(newTask.myProject, newTask);
         console.log(newTask.myProject)
         wipeDiv('task-list')
         displayTask(newTask.myProject)
@@ -120,7 +122,7 @@ const editTaskWindow = document.querySelector('#editWindow')
 editTaskWindow.addEventListener('click', (e) => {
     if (e.target.matches('#submit-btn-edit')) {
 
-        storeEditItem('tasklist', id)
+        storeEditItem('tasklist', id) //adjust func to get data-key value from dom
         displayInputWindow(false, 'editWindow')
         clearForm('editTask-form')
         wipeDiv('task-list')
@@ -141,7 +143,6 @@ function createTask() {
     document.getElementById('priority').value, 
     document.getElementById('projects').value,
     '')
-    taskArray.push(newTask)
     return newTask
 }
 
@@ -161,10 +162,10 @@ function editTask() {
         return newTask
 }
 
-function storeItem(key, value, arr) {
+function storeItem(key, value) {
     const taskArray = fetchItem(key)
     if (taskArray == null) {
-        localStorage.setItem(key, JSON.stringify(arr));
+        localStorage.setItem(key, JSON.stringify(value));
         return
     }
     taskArray.push(value)
@@ -194,5 +195,3 @@ function storeEditItem(key, index) {
     taskObj.splice(index, 1, newObj)
     localStorage.setItem(key, JSON.stringify(taskObj))
 }
-
-// editItem is returning taskObj as an array, however taskObj[0] is always undefined

@@ -1,12 +1,13 @@
 import { fetchItem } from ".";
 
-function createElement(id, element, value, cssClass, ownId) {
+function createElement(id, element, value, cssClass, ownId, dataKey) {
     const content = document.getElementById(id)
     const container = document.createElement(element)
     container.innerHTML = value
     content.appendChild(container)
     container.setAttribute('class', cssClass)
     container.setAttribute('id', ownId)
+    container.dataset.key = dataKey
     return container
 }
 
@@ -27,6 +28,7 @@ export function wipeDiv(divId) {
 }
 
 export function displayTask(key) {
+    const dataKey = key
     const item = fetchItem(key);
     if (item == null) {
         return
@@ -38,13 +40,14 @@ export function displayTask(key) {
             if (Object.keys(e).slice(-1)[0] !== key) {
                 
             if (!exec) {
-            createElement('task-list', 'div', '', 'task-div', 'div' + i)
-            createElement('div' + i, 'div', '', 'taskDiv', 'taskDiv' + i)
-            createElement('div' + i, 'div', '', 'button-div', 'btnDiv' + i)
-            createElement('btnDiv' + i, 'button', 'delete', 'delete-btn', '')
+                // console.log(dataKey)
+            createElement('task-list', 'div', '', 'task-div', 'div' + i, '')
+            createElement('div' + i, 'div', '', 'taskDiv', 'taskDiv' + i, dataKey)
+            createElement('div' + i, 'div', '', 'button-div', 'btnDiv' + i, dataKey)
+            createElement('btnDiv' + i, 'button', 'delete', 'delete-btn', '', dataKey)
             exec = true
             }
-            createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p')
+            createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p', dataKey)
             }
         }
         ++i; 
