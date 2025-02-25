@@ -1,4 +1,4 @@
-import { fetchItem } from ".";
+import { fetchItem } from "./storage";
 
 function createElement(id, element, value, cssClass, ownId, dataKey) {
     const content = document.getElementById(id)
@@ -41,13 +41,13 @@ export function displayTask(key) {
                 
             if (!exec) {
                 // console.log(dataKey)
-            createElement('task-list', 'div', '', 'task-div', 'div' + i, '')
+            createElement('task-list', 'div', '', 'task-div', 'div' + i, dataKey)
             createElement('div' + i, 'div', '', 'taskDiv', 'taskDiv' + i, dataKey)
             createElement('div' + i, 'div', '', 'button-div', 'btnDiv' + i, dataKey)
             createElement('btnDiv' + i, 'button', 'delete', 'delete-btn', '', dataKey)
             exec = true
             }
-            createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p', dataKey)
+            createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p', '', dataKey)
             }
         }
         ++i; 
@@ -59,13 +59,14 @@ export function displayTask(key) {
 
 export function displayProject() {
     const item = fetchItem('projectList')
+    console.log
     if (item == null) {
         return
     }
     let i = 1
     item.forEach(e => {
         for (let key in e) {                      
-            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project' + i)   
+            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project' + i, 'projects')   
             addOption(charRemove(JSON.stringify(e[key])), 'projects')
         }
         ++i; 
@@ -105,4 +106,4 @@ function addOption(value, id) {
   selectElement.add(newOption) // Or selectElement.appendChild(newOption);
 }
 
-addOption
+// addOption

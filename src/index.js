@@ -1,5 +1,6 @@
 import './style.css';
 import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEditTask, wipeDiv, displayProject } from './dom';
+import { storeItem, deleteItem, fetchItem, editItem, storeEditItem } from './storage';
 
 console.log('Yeet')
 
@@ -31,9 +32,36 @@ class project {
     }
 }
 
+export function createTask() {
+    const newTask = new task(document.getElementById('title').value, 
+    document.getElementById('description').value, 
+    document.getElementById('datePicker').value, 
+    document.getElementById('priority').value, 
+    document.getElementById('projects').value,
+    '')
+    return newTask
+}
+
+export function editTask() {
+    const newTask = new task(document.getElementById('title-edit').value, 
+        document.getElementById('description-edit').value, 
+        document.getElementById('datePicker-edit').value, 
+        document.getElementById('priority-edit').value, 
+        document.getElementById('projects').value,
+        document.getElementById('notes-edit').value)
+        return newTask
+}
+
+export function createProject() {
+    const newProject = new project(document.getElementById('name').value)
+    projectArray.push(newProject)
+    return newProject
+}
+
 //need function that will get task.project when selecting a task to edit
 
 let id = null
+let dataKey = null
 
 const div = document.querySelector('#task-list')
 div.addEventListener('click', (e) => {
@@ -44,7 +72,7 @@ div.addEventListener('click', (e) => {
             id = id.slice(7)
             id = parseInt(id)
             console.log(id)
-            const dataKey = target.getAttribute('data-key')
+            dataKey = target.getAttribute('data-key')
             displayInputWindow(true, 'editWindow')
             editItem(dataKey, id)
         }
@@ -52,12 +80,15 @@ div.addEventListener('click', (e) => {
     if (e.target.matches('.delete-btn')) {
         const target = e.target.closest('.task-div')
         if (target) {
+            console.log(target)
+            let dataKey = target.getAttribute('data-key')
+            console.log(dataKey)
             let id = target.id
             id = id.slice(3)
             id = parseInt(id)
-            deleteItem('tasklist', id)
+            deleteItem(dataKey, id)
             wipeDiv('task-list')
-            displayTask()
+            displayTask(dataKey)
         }
     }
 })
@@ -74,7 +105,6 @@ navButtons.addEventListener('click', (e) => {
         const target = e.target.closest('.project-btn')
         console.log(target)
         if (target) {
-            console.log(target.innerHTML)
             wipeDiv('task-list')
             displayTask(target.innerHTML)
         }
@@ -88,10 +118,11 @@ projectForm.addEventListener('click', (e) => {
         clearForm('project-form')
         e.preventDefault()
     }
-    if (e.target.matches('#submit-btn-project')) {
+    if (e.target.matches('#submit-btn-project')) { //After div projects div is wiped Home option is also wiped until page refresh
         const newProject = createProject()
         storeItem('projectList', newProject)
         wipeDiv('project-list')
+        wipeDiv('projects')
         displayProject()
         displayInputWindow(false, 'project-form-div')
         clearForm('project-form')
@@ -121,12 +152,11 @@ taskForm.addEventListener('click' , (e) => {
 const editTaskWindow = document.querySelector('#editWindow')
 editTaskWindow.addEventListener('click', (e) => {
     if (e.target.matches('#submit-btn-edit')) {
-
-        storeEditItem('tasklist', id) //adjust func to get data-key value from dom
+        storeEditItem(dataKey, id) //adjust func to get data-key value from dom
         displayInputWindow(false, 'editWindow')
         clearForm('editTask-form')
         wipeDiv('task-list')
-        displayTask('tasklist')
+        displayTask(dataKey)
         e.preventDefault()
     }
     if (e.target.matches('#close-btn-edit')) {
@@ -136,62 +166,3 @@ editTaskWindow.addEventListener('click', (e) => {
     }
 })
 
-function createTask() {
-    const newTask = new task(document.getElementById('title').value, 
-    document.getElementById('description').value, 
-    document.getElementById('datePicker').value, 
-    document.getElementById('priority').value, 
-    document.getElementById('projects').value,
-    '')
-    return newTask
-}
-
-function createProject() {
-    const newProject = new project(document.getElementById('name').value)
-    projectArray.push(newProject)
-    return newProject
-}
-
-function editTask() {
-    const newTask = new task(document.getElementById('title-edit').value, 
-        document.getElementById('description-edit').value, 
-        document.getElementById('datePicker-edit').value, 
-        document.getElementById('priority-edit').value, 
-        document.getElementById('projects').value,
-        document.getElementById('notes-edit').value)
-        return newTask
-}
-
-function storeItem(key, value) {
-    const taskArray = fetchItem(key)
-    if (taskArray == null) {
-        localStorage.setItem(key, JSON.stringify(value));
-        return
-    }
-    taskArray.push(value)
-    localStorage.setItem(key, JSON.stringify(taskArray));
-}
-
-function deleteItem(key, index) {
-    let taskArray = fetchItem(key)
-    taskArray.splice(index, 1)
-    console.log(taskArray)
-    localStorage.setItem(key, JSON.stringify(taskArray));
-}
-
-export function fetchItem(key) {
-    return JSON.parse(localStorage.getItem(key));
-}
-
-function editItem(key, index) {
-    const taskObj = fetchItem(key)
-    let obj = taskObj.splice(index, 1, undefined)
-    displayEditTask(obj[0])
-}
-
-function storeEditItem(key, index) {
-    let taskObj = fetchItem(key)
-    const newObj = editTask()
-    taskObj.splice(index, 1, newObj)
-    localStorage.setItem(key, JSON.stringify(taskObj))
-}
