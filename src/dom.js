@@ -1,4 +1,5 @@
 import { fetchItem } from "./storage";
+import deleteBtn from './svg/delete_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg';
 
 function createElement(id, element, value, cssClass, ownId, dataKey) {
     const content = document.getElementById(id)
@@ -44,7 +45,8 @@ export function displayTask(key) {
             createElement('task-list', 'div', '', 'task-div', 'div' + i, dataKey)
             createElement('div' + i, 'div', '', 'taskDiv', 'taskDiv' + i, dataKey)
             createElement('div' + i, 'div', '', 'button-div', 'btnDiv' + i, dataKey)
-            createElement('btnDiv' + i, 'button', 'delete', 'delete-btn', '', dataKey)
+            createElement('btnDiv' + i, 'button', '', 'delete-btn', '', dataKey)
+
             exec = true
             }
             createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p', '', dataKey)
@@ -53,6 +55,7 @@ export function displayTask(key) {
         ++i; 
         exec = false;
     });
+    createSvg()
 };
 
 
@@ -96,8 +99,6 @@ export function displayEditTask(obj) {
     document.getElementById('notes-edit').value = obj.notes
 }
 
-
-
 function addOption(value, id) {
   const selectElement = document.getElementById(id)
   const newOption = document.createElement('option')
@@ -106,4 +107,18 @@ function addOption(value, id) {
   selectElement.add(newOption) // Or selectElement.appendChild(newOption);
 }
 
-// addOption
+
+function createSvg() {
+    const btn = document.querySelectorAll('.delete-btn')
+    console.log(btn)
+    console.log('once')
+    btn.forEach(e => {
+        const img = document.createElement('img')
+        img.setAttribute('src', deleteBtn)
+        img.setAttribute('class', 'delete-btn')
+        e.appendChild(img)
+        console.log('loop')
+    })
+
+}
+
