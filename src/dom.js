@@ -49,8 +49,10 @@ export function displayTask(key) {
 
             exec = true
             }
+            if (key == 'title' || key == 'dueDate') {
             createElement('taskDiv' + i, 'p', charRemove(JSON.stringify(e[key])), 'task-p', '', dataKey)
             }
+          }  
         }
         ++i; 
         exec = false;
