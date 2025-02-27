@@ -95,10 +95,10 @@ div.addEventListener('click', (e) => {
 
 const navButtons = document.querySelector('#nav-buttons')
 navButtons.addEventListener('click', (e) => {
-    if (e.target.matches('#task-btn')) {
+    if (e.target.matches('.add-task')) {
         displayInputWindow(true, 'inputWindow');
     }
-    if (e.target.matches('#add-project')) {
+    if (e.target.matches('.add-project')) {
         displayInputWindow(true, 'project-form-div')
     }
     if (e.target.matches('.project-btn')) {

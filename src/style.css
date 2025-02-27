@@ -50,7 +50,14 @@ nav {
     flex-direction: column;
 }
 
-nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list {
+#task-btn {
+    margin: 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list, .add-project, .add-task {
     background-color: #181818
 }
 
@@ -73,7 +80,11 @@ nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list {
     margin: 5px;
 }
 
-.project-btn:hover, #task-btn:hover {
+button {
+    background: none;
+}
+
+.project-btn:hover, #add-task-btn:hover {
     background-color: peachpuff;
 }
 
@@ -95,10 +106,23 @@ nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list {
     width: 100%;
 }
 
+.nav-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .project-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: 5px;
+    border: 2px solid white;
+    align-items: center;
+}
+
+#project-title, .add-project {
+    border: none
 }
 
 #project-list, #project-div {
@@ -117,6 +141,6 @@ nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list {
     border: none;
 }
 
-img {
-    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(257deg) brightness(98%) contrast(114%);
-}
+/* img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(108deg) brightness(109%) contrast(101%);
+} */
