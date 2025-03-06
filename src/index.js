@@ -1,5 +1,5 @@
 import './style.css';
-import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEditTask, wipeDiv, displayProject } from './dom';
+import { displayInputWindow, displayNewTask, clearForm, displayTask, displayEditTask, wipeDiv, displayProject, wipeProjectOptions } from './dom';
 import { storeItem, deleteItem, fetchItem, editItem, storeEditItem } from './storage';
 
 console.log('Yeet')
@@ -71,7 +71,6 @@ div.addEventListener('click', (e) => {
             id = e.target.parentElement.id
             id = id.slice(7)
             id = parseInt(id)
-            console.log(id)
             dataKey = target.getAttribute('data-key')
             displayInputWindow(true, 'editWindow')
             editItem(dataKey, id)
@@ -80,9 +79,7 @@ div.addEventListener('click', (e) => {
     if (e.target.matches('.delete-btn')) {
         const target = e.target.closest('.task-div')
         if (target) {
-            console.log(target)
             let dataKey = target.getAttribute('data-key')
-            console.log(dataKey)
             let id = target.id
             id = id.slice(3)
             id = parseInt(id)
@@ -103,7 +100,6 @@ navButtons.addEventListener('click', (e) => {
     }
     if (e.target.matches('.project-btn')) {
         const target = e.target.closest('.project-btn')
-        console.log(target)
         if (target) {
             wipeDiv('task-list')
             displayTask(target.innerHTML)
@@ -118,11 +114,11 @@ projectForm.addEventListener('click', (e) => {
         clearForm('project-form')
         e.preventDefault()
     }
-    if (e.target.matches('#submit-btn-project')) { //After div projects div is wiped Home option is also wiped until page refresh
-        const newProject = createProject()
+    if (e.target.matches('#submit-btn-project')) { //After projects div is wiped Home option is also wiped until page refresh. Home
+        const newProject = createProject() //Home div is never stored in local storage
         storeItem('projectList', newProject)
         wipeDiv('project-list')
-        wipeDiv('projects')
+        wipeProjectOptions  ('projects')
         displayProject()
         displayInputWindow(false, 'project-form-div')
         clearForm('project-form')
@@ -135,7 +131,6 @@ taskForm.addEventListener('click' , (e) => {
     if (e.target.matches('#submit-btn')) {
         const newTask = createTask();
         storeItem(newTask.myProject, newTask);
-        console.log(newTask.myProject)
         wipeDiv('task-list')
         displayTask(newTask.myProject)
         displayInputWindow(false, 'inputWindow');

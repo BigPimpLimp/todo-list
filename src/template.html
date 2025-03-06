@@ -8,7 +8,6 @@
 <body>
     <header>
     </header>
-    <img src='svg/add_circle_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg'>
     <nav id="nav-buttons">
         <button id="task-btn" class="add-task"><img src='svg/add_circle_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' class="add-task" id="add-task-btn">
              Add Task
@@ -43,7 +42,8 @@
                     <option value="high">high</option>
                 </select>
                 <select name="projects" id="projects">
-                    <option value="Home">Home</option selected>
+                    <option value="" selected disabled hidden>Select Project</option>
+                    <option value="Home">Home</option>
                 </select>
             </div>
             <div id="submitDiv">
@@ -53,6 +53,7 @@
         </form>
     </div>
     <div id="editWindow">
+        <div id="edit-wrapper">
         <form action="" method="post" class="form" id="editTask-form">
             <div id="title-description">
                 <label for="title-edit"></label>
@@ -73,9 +74,11 @@
                     <option value="Home">Home</option selected>
                 </select>
             </div>
+        </div>
             <div id ='notes-edit-div'>
-                <label for="notes-edit"></label>
-                <input type="text" id="notes-edit" name="notes-edit" placeholder="Enter notes here">
+                <!-- <label for="notes-edit"></label>
+                <input type="text" id="notes-edit" name="notes-edit" placeholder="Enter notes here"> -->
+                <textarea name="text" id="notes-edit" placeholder="Enter notes here"></textarea>
             </div>
             <div id="submitDiv-edit">
                 <button id="close-btn-edit">Cancel</button>
@@ -95,6 +98,7 @@
             </div>
         </form>
     </div>
+    <div id="task-header"></div>
     <div id="task-list"></div>
 </body>
 </html>

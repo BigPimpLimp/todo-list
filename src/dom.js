@@ -28,9 +28,18 @@ export function wipeDiv(divId) {
     }
 }
 
+export function wipeProjectOptions(divId) {
+    const projects = document.getElementById(divId)
+    const children = Array.from(projects.children).slice(1)
+    children.forEach(e => {
+       e.remove()
+    })
+}
+
 export function displayTask(key) {
     const dataKey = key
     const item = fetchItem(key);
+    displayProjectHeader(key)
     if (item == null) {
         return
     }
@@ -41,7 +50,6 @@ export function displayTask(key) {
             if (Object.keys(e).slice(-1)[0] !== key) {
                 
             if (!exec) {
-                // console.log(dataKey)
             createElement('task-list', 'div', '', 'task-div', 'div' + i, dataKey)
             createElement('div' + i, 'div', '', 'taskDiv', 'taskDiv' + i, dataKey)
             createElement('div' + i, 'div', '', 'button-div', 'btnDiv' + i, dataKey)
@@ -64,14 +72,14 @@ export function displayTask(key) {
 
 export function displayProject() {
     const item = fetchItem('projectList')
-    console.log
     if (item == null) {
         return
     }
-    let i = 1
+    let i = 1 //may need to change back to 1
     item.forEach(e => {
         for (let key in e) {                      
-            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project' + i, 'projects')   
+            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project' + i, 'projects') 
+            // createElement('project' + i, 'button', '', 'delete-btn', '')  
             addOption(charRemove(JSON.stringify(e[key])), 'projects')
         }
         ++i; 
@@ -112,15 +120,17 @@ function addOption(value, id) {
 
 function createSvg() {
     const btn = document.querySelectorAll('.delete-btn')
-    console.log(btn)
-    console.log('once')
     btn.forEach(e => {
         const img = document.createElement('img')
         img.setAttribute('src', deleteBtn)
         img.setAttribute('class', 'delete-btn')
         e.appendChild(img)
-        console.log('loop')
     })
 
 }
 
+function displayProjectHeader(key) {
+    console.log(key)
+    const div = document.getElementById('task-header')
+    div.innerHTML = key
+}
