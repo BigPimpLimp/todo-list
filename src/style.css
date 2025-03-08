@@ -73,13 +73,14 @@ nav {
 }
 
 #task-btn {
-    margin: 5px;
+    margin: 10px;
     display: flex;
     justify-content: start;
     align-items: center;
+    border: 1px white solid;
 }
 
-nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list, .add-project, .add-task {
+nav, .nav-btn, .project-div, .project-btn, .project-header, .project-list, .add-project, .add-task, #project-header-div {
     background-color: #181818;
     font-size: 1.7rem;
 }
@@ -122,8 +123,8 @@ button {
     background: none;
 }
 
-.project-btn:hover, #add-task-btn:hover {
-    background-color: peachpuff;
+.project-btn:hover, #task-btn:hover, .project-div:hover {
+    border-color: green;
 }
 
 .task-div {
@@ -151,19 +152,23 @@ button {
 }
 
 .project-header {
+    margin: 5px;
+}
+
+#project-header-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 5px;
-    border: 2px solid white;
+    border-bottom: 1px solid white;
     align-items: center;
+    margin: 10px;
 }
 
 #project-title, .add-project {
     border: none
 }
 
-#project-list, #project-div {
+#project-div {
     display: flex;
     flex-direction: column;
     text-align: start;
@@ -171,15 +176,28 @@ button {
 
 .project-btn {
     text-align: start;
-    margin: 5px;
+    width: 100%;
+    height: 100%;
 }
 
-.delete-btn, .delete-project-btn {
+.project-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px white solid;
+    margin: 10px;
+}
+
+#home-project {
+    margin-bottom: 0px;
+}
+
+.delete-btn, .delete-project-btn, .project-btn, #add-task-btn {
     background: transparent;
     border: none;
 }
 
-.delete-btn:has(img), .delete-project-btn:has(img) {
+.delete-btn:has(img), .delete-project-btn:has(img), #add-task-btn {
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(108deg) brightness(109%) contrast(101%);
 }
 

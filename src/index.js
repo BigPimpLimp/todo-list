@@ -118,7 +118,7 @@ navButtons.addEventListener('click', (e) => {
             deleteItem(dataKey, id)
             localStorage.removeItem(taskArrKey)
             wipeDiv('project-list')
-            wipeProjectOptions('projects') // check this function to exclude Home project
+            wipeProjectOptions('projects') 
             displayProject()
         }
     }
@@ -131,8 +131,8 @@ projectForm.addEventListener('click', (e) => {
         clearForm('project-form')
         e.preventDefault()
     }
-    if (e.target.matches('#submit-btn-project')) { //After projects div is wiped Home option is also wiped until page refresh. Home
-        const newProject = createProject() //Home div is never stored in local storage
+    if (e.target.matches('#submit-btn-project')) { 
+        const newProject = createProject() 
         storeItem('projectList', newProject)
         wipeDiv('project-list')
         wipeProjectOptions('projects')
@@ -164,7 +164,7 @@ taskForm.addEventListener('click' , (e) => {
 const editTaskWindow = document.querySelector('#editWindow')
 editTaskWindow.addEventListener('click', (e) => {
     if (e.target.matches('#submit-btn-edit')) {
-        storeEditItem(dataKey, id) //adjust func to get data-key value from dom
+        storeEditItem(dataKey, id) 
         displayInputWindow(false, 'editWindow')
         clearForm('editTask-form')
         wipeDiv('task-list')

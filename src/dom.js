@@ -28,9 +28,9 @@ export function wipeDiv(divId) {
     }
 }
 
-export function wipeProjectOptions(divId) {
+export function wipeProjectOptions(divId) { 
     const projects = document.getElementById(divId)
-    const children = Array.from(projects.children).slice(1)
+    const children = [...projects.children].slice(2)
     children.forEach(e => {
        e.remove()
     })
@@ -80,7 +80,7 @@ export function displayProject() {
     let i = 1 //may need to change back to 1
     item.forEach(e => {
         for (let key in e) {                      
-            createElement('project-list', 'div', '', '', 'project' + i, 'projects')
+            createElement('project-list', 'div', '', 'project-div', 'project' + i, 'projects')
             createElement('project' + i, 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project-btn' + i, 'projects') 
             createElement('project' + i, 'button', '', 'delete-project-btn', 'project-delete-btn' + i, 'projectList')  
             addOption(charRemove(JSON.stringify(e[key])), 'projects')
