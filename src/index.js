@@ -105,6 +105,23 @@ navButtons.addEventListener('click', (e) => {
             displayTask(target.innerHTML)
         }
     }
+    if (e.target.matches('.delete-project-btn')) {
+        const target = e.target.closest('.delete-project-btn')
+        if (target) {
+            let dataKey = target.parentElement.getAttribute('data-key')
+            let id = target.parentElement.id
+            let parentEl = target.parentElement
+            let taskArrKey = parentEl.previousElementSibling.innerHTML
+            id = id.slice(18)
+            id = parseInt(id)
+            id--
+            deleteItem(dataKey, id)
+            localStorage.removeItem(taskArrKey)
+            wipeDiv('project-list')
+            wipeProjectOptions('projects') // check this function to exclude Home project
+            displayProject()
+        }
+    }
 })
 
 const projectForm = document.querySelector('#project-form-div')
@@ -118,7 +135,7 @@ projectForm.addEventListener('click', (e) => {
         const newProject = createProject() //Home div is never stored in local storage
         storeItem('projectList', newProject)
         wipeDiv('project-list')
-        wipeProjectOptions  ('projects')
+        wipeProjectOptions('projects')
         displayProject()
         displayInputWindow(false, 'project-form-div')
         clearForm('project-form')

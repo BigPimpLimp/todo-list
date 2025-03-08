@@ -15,9 +15,14 @@ export function storeItem(key, value) {
 
 export function deleteItem(key, index) {
     let taskArray = fetchItem(key)
+    console.log(taskArray)
     taskArray.splice(index, 1)
     console.log(taskArray)
     localStorage.setItem(key, JSON.stringify(taskArray));
+}
+
+export function deleteKey(key) {
+    removeItem(key)
 }
 
 export function fetchItem(key) {

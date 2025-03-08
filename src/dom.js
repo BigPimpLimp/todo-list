@@ -65,25 +65,29 @@ export function displayTask(key) {
         ++i; 
         exec = false;
     });
-    createSvg()
+    createSvg('.delete-btn', 'delete-btn')
 };
+
 
 
 
 export function displayProject() {
     const item = fetchItem('projectList')
+    const dataKey = 'projectList'
     if (item == null) {
         return
     }
     let i = 1 //may need to change back to 1
     item.forEach(e => {
         for (let key in e) {                      
-            createElement('project-list', 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project' + i, 'projects') 
-            // createElement('project' + i, 'button', '', 'delete-btn', '')  
+            createElement('project-list', 'div', '', '', 'project' + i, 'projects')
+            createElement('project' + i, 'button', charRemove(JSON.stringify(e[key])), 'project-btn', 'project-btn' + i, 'projects') 
+            createElement('project' + i, 'button', '', 'delete-project-btn', 'project-delete-btn' + i, 'projectList')  
             addOption(charRemove(JSON.stringify(e[key])), 'projects')
         }
         ++i; 
     });
+    createSvg('.delete-project-btn', 'delete-project-btn')
 }
 
 function charRemove(str) {
@@ -118,12 +122,12 @@ function addOption(value, id) {
 }
 
 
-function createSvg() {
-    const btn = document.querySelectorAll('.delete-btn')
+function createSvg(a, b) { // a is css class with . b is without .
+    const btn = document.querySelectorAll(a)
     btn.forEach(e => {
         const img = document.createElement('img')
         img.setAttribute('src', deleteBtn)
-        img.setAttribute('class', 'delete-btn')
+        img.setAttribute('class', b)
         e.appendChild(img)
     })
 
